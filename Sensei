@@ -1,0 +1,103 @@
+package SenseiJump;
+
+import Zen.*;
+
+public class Sensei extends ZenSprite {
+
+	Circle head;
+	Oval body;
+	Rectangle staff;
+	Oval torso;
+	Oval lFoot;
+	Oval rFoot;
+	
+	int velocity = 0;	
+	int jumps = 0;
+	
+	World w;
+	
+	public Sensei() {
+		head = new Circle(0,0,25);
+		head.setColor("tan");
+		body = new Oval(0,0,20,40);
+		body.setColor("black");
+		torso = new Oval(0,0,22,25);
+		torso.setColor("black");
+		staff = new Rectangle(0,0,3,60);
+		staff.setColor("brown");
+		lFoot = new Oval(0,0,15,5);
+		lFoot.setColor("tan");
+		rFoot = new Oval(0,0,15,5);
+		rFoot.setColor("tan");
+		
+	}
+	
+	
+	public void draw() {
+		int x  = getX();
+		int y = getY();
+		head.setPosition(x,y);
+		body.setPosition(x,y+30);
+		torso.setPosition(x,y+50);
+		staff.setPosition(x+15,y);
+		lFoot.setPosition(x+8,y+60);
+		rFoot.setPosition(x-8,y+60);
+		Zen.draw(head);
+		Zen.draw(torso);
+		Zen.draw(staff);
+		Zen.draw(body);
+		Zen.draw(lFoot);
+		Zen.draw(lFoot);
+		Zen.draw(rFoot);
+		
+		
+	}
+
+	
+	public void move() {
+		if(Zen.isKeyPressed("right")) {
+			setX(getX() + SenseiJump.SPEED);
+		}
+		if (Zen.isKeyPressed("left")) {
+			setX(getX() - SenseiJump.SPEED);
+		}
+		if(jumps==0 && Zen.isKeyPressed("space")) {
+			jumps++;
+			velocity = SenseiJump.FIRST_JUMP;
+			setY(getY() + velocity);
+		}
+		if (jumps == 1 && ! Zen.isKeyPressed("space") ){
+			jumps++;
+		}
+		if(jumps == 2 && Zen.isKeyPressed("space")) {
+			jumps++;
+			velocity =  SenseiJump.SECOND_JUMP;
+			setY(getY() + velocity);
+		}
+		velocity += SenseiJump.GRAVITY;
+		// Accounting for gravity
+		int level = SenseiJump.GROUND;
+		
+		Platform p = w.getPlatform(getX(), getY() + 60);
+		
+		if(p.getY()-60 == getY() && p.getX() - 50 < getX() && p.getX() + 50 > getX()) {
+			level = p.getY() -60;
+		}
+		else{
+			System.out.println("Checking " + getX() + "," + getY() + " vs " + p.getX() + ", " + p.getY());
+			if(velocity >=0 && getY() +60 < p.getY() && getY()+60 > p.getY() - 60 && getX() < p.getX() +50 && getX() > p.getX() -50) {
+				level = p.getY() - 60;
+			}
+		}
+		System.out.println("Level: " + level);
+		if ( getY() + velocity <= level) {
+		    setY(getY() + velocity);
+		}
+		else {
+			setY(level);
+			jumps = 0;
+			velocity = 0;
+		}
+	}
+
+}
