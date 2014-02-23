@@ -1,0 +1,15 @@
+import Animation.Animate;
+import Drawing.Drawing;
+import FlappyBird.FlappyBird;
+import SenseiJump.SenseiJump;
+
+
+public class GameDriver {
+	public static void main(String[] args) {
+		/*FlappyBird game = new FlappyBird();
+		game.run();*/
+		
+		SenseiJump game = new SenseiJump();
+		game.run();
+	}
+}
