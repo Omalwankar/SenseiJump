@@ -1,0 +1,22 @@
+package SenseiJump;
+
+import Zen.*;
+
+public class Platform extends ZenSprite {
+
+	@Override
+	public void draw() {
+		Zen.setColor("red");
+		Zen.fillRect(getX()-35, getY(), 70, 10);
+		
+		
+	}
+
+	@Override
+	public void move() {
+		// TODO Auto-generated method stub
+		
+	}
+	
+
+}
