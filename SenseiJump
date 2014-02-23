@@ -1,0 +1,48 @@
+package SenseiJump;
+
+import Zen.*;
+
+public class SenseiJump extends ZenGame {
+
+	public static final int GROUND = 320;
+	public static final int GRAVITY = 1;
+	public static final int FIRST_JUMP = -15;
+	public static final int SECOND_JUMP = -10;
+	public static final int SPEED = 5;
+	Sensei sensei;
+	World world;
+	
+	public SenseiJump() {
+	setSize(500,400);
+	}
+	
+	
+	public void setup() {
+		sensei = new Sensei();
+		sensei.setPosition(50, 200);
+		world = new World();
+		Platform p = new Platform();
+		p.setPosition(200,200);
+		world.addPlatform(p);
+		Platform p2 = new Platform();
+		p2.setPosition(400,300);
+		world.addPlatform(p2);
+		Platform p3 = new Platform();
+		p3.setPosition(200,275);
+		world.addPlatform(p3);
+		sensei.w = world;
+		
+	}
+
+	
+	public void loop() {
+		Zen.setBackground("light blue");
+		Zen.setColor("green");
+		Zen.fillRect(0, 370, 500, 30);
+		sensei.draw();
+		sensei.move();
+		world.draw();
+		
+	}
+
+}
